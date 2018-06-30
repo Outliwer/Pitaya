@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/1.png</file>
+        <file>img/2.png</file>
+        <file>img/3.png</file>
+        <file>img/undo.png</file>
+        <file>img/redo.png</file>
+        <file>img/aerialtriangulation.png</file>
+        <file>img/attribution.png</file>
+        <file>img/cloudmodel.png</file>
+        <file>img/distance.png</file>
+        <file>img/exit.png</file>
+        <file>img/new.png</file>
+        <file>img/open.png</file>
+        <file>img/options.png</file>
+        <file>img/OSGimg.png</file>
+        <file>img/Panoramicimage.png</file>
+        <file>img/ProjectManager.png</file>
+        <file>img/save.png</file>
+        <file>img/saveas.png</file>
+        <file>img/seehelp.png</file>
+        <file>img/sendfeedback.png</file>
+        <file>img/statusbar.png</file>
+        <file>img/technicalsupport.png</file>
+    </qresource>
+</RCC>
