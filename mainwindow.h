@@ -22,6 +22,7 @@ protected:
     void CreateMenu();
     void CreateToolBar();
     void CreateStatusBar();
+    void CreateCamera();
 
     virtual void mouseMoveEvent(QMouseEvent *event);
 

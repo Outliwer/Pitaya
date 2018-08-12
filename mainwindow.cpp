@@ -17,6 +17,17 @@
 #include <QPoint>
 #include <QSize>
 
+#include <QtCore/QtCore>
+#include <QtGui/QtGui>
+#include <osgDB/ReadFile>
+#include <osgGA/TrackballManipulator>
+#include <osgViewer/ViewerEventHandlers>
+#include <osgViewer/Viewer>
+#include <osgQt/GraphicsWindowQt>
+#include <QVBoxLayout>
+#include "libs.h"
+#include "osgview.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),  
     ui(new Ui::MainWindow)
@@ -30,6 +41,26 @@ MainWindow::MainWindow(QWidget *parent) :
     CreateMenu();
     CreateToolBar();
     CreateStatusBar();
+
+    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
+    osg::Node* scene = osgDB::readNodeFile("cow.osg");
+
+    ViewerWidget* widget = new ViewerWidget(gw, scene);
+    widget->setGeometry( 100, 100, 800, 600 );
+
+//    //读取一个模型，此部分以后封装成函数
+//    osg::Group* view_root = new osg::Group;
+//    view_root->addDescription("view_root");
+//    view_root->setName("view_root");
+
+
+//    //读一个osg文件看看效果
+//    osg::Node * p = osgDB::readNodeFile("cow.osg");
+//    view_root->addChild(p);
+
+//    QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), view_root );
+    //设置中心区
+    this->setCentralWidget(widget);
 
     QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
     dock->setFeatures(QDockWidget::DockWidgetMovable);
@@ -45,6 +76,12 @@ MainWindow::~MainWindow()
 {
 
     delete ui;
+}
+
+
+void MainWindow::CreateCamera()
+{
+
 }
 
 void MainWindow::CreateMenu()
