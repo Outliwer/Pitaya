@@ -1,3 +1,6 @@
+#include "drawtwoball.h"
+#include "pickhandler.h"
+
 #ifndef OSGVIEW_H
 #define OSGVIEW_H
 
@@ -21,7 +24,7 @@ public:
     : QWidget()
     {
         const osg::GraphicsContext::Traits* traits = gw->getTraits();
-
+        PickHandler* p=new PickHandler();
         osg::Camera* camera = _viewer.getCamera();
         camera->setGraphicsContext( gw );
         camera->setClearColor( osg::Vec4(0.2, 0.2, 0.6, 1.0) );
