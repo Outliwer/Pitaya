@@ -48,18 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ViewerWidget* widget = new ViewerWidget(gw, scene);
     widget->setGeometry( 100, 100, 800, 600 );
 
-//    //读取一个模型，此部分以后封装成函数
-//    osg::Group* view_root = new osg::Group;
-//    view_root->addDescription("view_root");
-//    view_root->setName("view_root");
 
-
-//    //读一个osg文件看看效果
-//    osg::Node * p = osgDB::readNodeFile("cow.osg");
-//    view_root->addChild(p);
-
-//    QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), view_root );
-    //设置中心区
     this->setCentralWidget(widget);
 
     QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);

@@ -15,11 +15,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    drawtwoball.cpp \
+    pickhandler.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
-    osgview.h
+    osgview.h \
+    drawtwoball.h \
+    pickhandler.h
 
 FORMS    += mainwindow.ui
 
