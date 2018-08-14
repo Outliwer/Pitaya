@@ -1,8 +1,18 @@
-#include "drawtwoball.h"
-#include "pickhandler.h"
-
 #ifndef OSGVIEW_H
 #define OSGVIEW_H
+
+#include <QTimer>
+#include <QPaintEvent>
+
+#include <osgViewer/Viewer>
+#include <osgViewer/ViewerEventHandlers>
+
+#include <osg/Node>
+#include <osg/Geode>
+#include <osg/Group>
+#include <osgQt/GraphicsWindowQt>
+
+#include "pickhandler.h"
 
 osgQt::GraphicsWindowQt* createGraphicsWindow( int x, int y, int w, int h )
 {
@@ -24,16 +34,17 @@ public:
     : QWidget()
     {
         const osg::GraphicsContext::Traits* traits = gw->getTraits();
-        PickHandler* p=new PickHandler();
-        osg::Camera* camera = _viewer.getCamera();
+        osg::Camera *camera=_viewer.getCamera();
         camera->setGraphicsContext( gw );
         camera->setClearColor( osg::Vec4(0.2, 0.2, 0.6, 1.0) );
         camera->setViewport( new osg::Viewport(0, 0, traits->width, traits->height) );
         camera->setProjectionMatrixAsPerspective(
             30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0f, 10000.0f );
 
-        _viewer.setSceneData( scene );
         _viewer.addEventHandler( new osgViewer::StatsHandler );
+//        _viewer.addEventHandler( new PickHandler );
+
+        _viewer.setSceneData(scene);
         _viewer.setCameraManipulator( new osgGA::TrackballManipulator );
         _viewer.setThreadingModel( osgViewer::Viewer::SingleThreaded );
 
@@ -47,10 +58,18 @@ public:
 
 protected:
     virtual void paintEvent( QPaintEvent* event )
-    { _viewer.frame(); }
+    {
+        _viewer.frame();
+    }
 
     osgViewer::Viewer _viewer;
     QTimer _timer;
+
+public:
+    void addPickHandle()
+    {
+        _viewer.addEventHandler(new PickHandler());
+    }
 };
 
 #endif // OSGVIEW_H

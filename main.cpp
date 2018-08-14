@@ -1,8 +1,12 @@
+#pragma once
+
 #include "mainwindow.h"
 #include <QApplication>
 
 #include <QtCore/QtCore>
 #include <QtGui/QtGui>
+
+#include "libs.h"
 #include <osgDB/ReadFile>
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/ViewerEventHandlers>
@@ -32,5 +36,4 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     return a.exec();
-
 }

@@ -14,6 +14,7 @@
     #pragma comment(lib,"osgManipulatord.lib")
     #pragma comment(lib,"osgParticled.lib")
     #pragma comment(lib,"osgPresentationd.lib")
+    #pragma comment(lib,"osgQt5d.lib")
     #pragma comment(lib,"osgShadowd.lib")
     #pragma comment(lib,"osgSimd.lib")
     #pragma comment(lib,"osgTerraind.lib")
@@ -23,6 +24,7 @@
     #pragma comment(lib,"osgViewerd.lib")
     #pragma comment(lib,"osgVolumed.lib")
     #pragma comment(lib,"osgWidgetd.lib")
+
 #else
     #pragma comment(lib,"OpenThreads.lib")
     #pragma comment(lib,"osgAnimation.lib")
@@ -33,6 +35,7 @@
     #pragma comment(lib,"osgManipulator.lib")
     #pragma comment(lib,"osgParticle.lib")
     #pragma comment(lib,"osgPresentation.lib")
+    #pragma comment(lib,"osgQt5.lib")
     #pragma comment(lib,"osgShadow.lib")
     #pragma comment(lib,"osgSim.lib")
     #pragma comment(lib,"osgTerrain.lib")
