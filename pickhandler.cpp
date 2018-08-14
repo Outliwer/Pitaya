@@ -1,4 +1,7 @@
+#pragma once
+
 #include "pickhandler.h"
+
 
 PickHandler::PickHandler()
 {
@@ -13,8 +16,11 @@ PickHandler::~PickHandler()
 
 bool PickHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa)
 {
-    osg::ref_ptr<osgViewer::View> view=dynamic_cast<osgViewer::View*>(&aa);
-    if(!view)return false;
+
+    //把view换成viewer试试
+    osgViewer::Viewer* view=dynamic_cast<osgViewer::Viewer*>(&aa);
+    if(!view)
+        return false;
 
     switch(ea.getEventType())
     {
@@ -31,63 +37,70 @@ bool PickHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapt
     {
         if(_mx==ea.getX() && _my==ea.getY())
         {
-            pick(view.get(),ea.getX(),ea.getY());//执行对象选取
-
-//            osg::Vec3 eye1=osg::Vec3(10.0f,0.0f,0.0f);
-//            osg::Vec3 center1=osg::Vec3(0.0f,0.0f,0.0f);
-//            osg::Vec3 up1=osg::Vec3(0.0f,0.0f,1.0f);
-
-//            view->setCameraManipulator(new osgGA::TrackballManipulator);
-
-//            osg::ref_ptr<osgGA::CameraManipulator> mt=view->getCameraManipulator();
-//            mt->setHomePosition(eye1,center1,up1);//后面可以设成全景球的中心
-//            view->setCameraManipulator(mt);
-            //view->home();
+            pick(view,ea.getX(),ea.getY());//执行对象选取
         }
         break;
     }
     default:
         break;
     }
+
+    view=NULL;
+    delete view;
     return false;
 }
 
 //对象选取事情处理器
-void PickHandler::pick(osg::ref_ptr<osgViewer::View> view, float x, float y)
+void PickHandler::pick(osgViewer::Viewer* view, float x, float y)
 {
-    osg::ref_ptr<osg::Node> node=new osg::Node;
-    osg::ref_ptr<osg::Group> parent=new osg::Group;
+    osg::ref_ptr<osg::Node> node=new osg::Node();
+    osg::ref_ptr<osg::Group> parent=new osg::Group();
     //创建一个线段交集检测函数
     osgUtil::LineSegmentIntersector::Intersections intersections;
+
     if(view->computeIntersections(x,y,intersections))
     {
         osgUtil::LineSegmentIntersector::Intersection intersection=*intersections.begin();
         osg::NodePath& nodePath=intersection.nodePath;
+
         //得到选择的物体
         node=(nodePath.size()>=1)?nodePath[nodePath.size()-1]:0;
         parent=(nodePath.size()>=2)?dynamic_cast<osg::Group*>(nodePath[nodePath.size()-2]):0;
+
     }
-    //，如果被选中，用一种高亮显示来显示被选中的物体
+    else
+    {
+        return;
+    }
+    //如果被选中，用带贴图的、有光照的节点替换这个节点，并把视点移动到该全景球的中心
     if(parent.get()&&node.get())
     {
-        osg::ref_ptr<osgFX::Scribe> parentAsScribe=dynamic_cast<osgFX::Scribe*>(parent.get());
-        if(!parentAsScribe)
+        osg::ref_ptr<osg::MatrixTransform> parentAsMt=dynamic_cast<osg::MatrixTransform*>
+                (parent.get());
+        if(parentAsMt)
         {
-            //如果对象被选中，高亮显示
-            osg::ref_ptr<osgFX::Scribe> scribe=new osgFX::Scribe;
-            scribe->addChild(node.get());
-            parent->replaceChild(node.get(),scribe.get());
-        }
-        else
-        {
-            //如果没有被选中，则移除高亮显示
-            osg::Node::ParentList parentList=parentAsScribe->getParents();
-            for(osg::Node::ParentList::iterator itr=parentList.begin();itr!=parentList.end();++itr)
-            {
-                (*itr)->replaceChild(parentAsScribe.get(),node.get());
-            }
+            if(lastNode)
+                lastNode->getParent(0)->replaceChild(
+                            lastNode.get(),PanoBallDataSet::LocatePanoBall(lastNode,false));
+
+            osg::ref_ptr<osg::Group> replaceNode=PanoBallDataSet::CreateLight(
+                        PanoBallDataSet::LocatePanoBall(node));
+//            osg::ref_ptr<osg::Node> replaceNode=
+//                        PanoBallDataSet::LocatePanoBall(node);
+
+            //把原始的白球节点换成有贴图的节点
+            parent->replaceChild(node.get(),replaceNode);//都是矩阵变换节点的子节点
+            lastNode=replaceNode.get();
+
+            osg::ref_ptr<osgGA::TrackballManipulator> ballMani=
+                    dynamic_cast<osgGA::TrackballManipulator*>(view->getCameraManipulator());
+//            if(lastMatrixd.ptr()!=NULL)
+//                ballMani->setByInverseMatrix(lastMatrixd);
+
+            ballMani->setByInverseMatrix(view->getCamera()->getViewMatrix());
+
+            ballMani->setDistance(3);
+            ballMani->setCenter(parent->getBound().center());//设置操作器的中心
         }
     }
 }
-
-

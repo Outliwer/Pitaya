@@ -1,4 +1,6 @@
-﻿#include "mainwindow.h"
+﻿#pragma once
+
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 
@@ -19,14 +21,21 @@
 
 #include <QtCore/QtCore>
 #include <QtGui/QtGui>
+
+#include "libs.h"
 #include <osgDB/ReadFile>
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/ViewerEventHandlers>
 #include <osgViewer/Viewer>
 #include <osgQt/GraphicsWindowQt>
 #include <QVBoxLayout>
-#include "libs.h"
+
+#include <QFileDialog>
+
 #include "osgview.h"
+
+#include "panoball.h"
+#include "pickhandler.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),  
@@ -42,22 +51,37 @@ MainWindow::MainWindow(QWidget *parent) :
     CreateToolBar();
     CreateStatusBar();
 
-    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
-    osg::Node* scene = osgDB::readNodeFile("cow.osg");
+//    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
 
-    ViewerWidget* widget = new ViewerWidget(gw, scene);
-    widget->setGeometry( 100, 100, 800, 600 );
+//    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
+//    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
 
 
-    this->setCentralWidget(widget);
 
-    QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
-    dock->setFeatures(QDockWidget::DockWidgetMovable);
-    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
-    QTextEdit *te1=new QTextEdit();
-    te1->setText(tr("ProjectManager"));
-    dock->setWidget(te1);
-    addDockWidget(Qt::LeftDockWidgetArea,dock);
+//    ViewerWidget* widget = new ViewerWidget(gw, scene);
+//    widget->setGeometry( 100, 100, 800, 600 );
+
+////    //读取一个模型，此部分以后封装成函数
+////    osg::Group* view_root = new osg::Group;
+////    view_root->addDescription("view_root");
+////    view_root->setName("view_root");
+
+
+////    //读一个osg文件看看效果
+////    osg::Node * p = osgDB::readNodeFile("cow.osg");
+////    view_root->addChild(p);
+
+////    QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), view_root );
+//    //设置中心区
+//    this->setCentralWidget(widget);
+
+//    QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
+//    dock->setFeatures(QDockWidget::DockWidgetMovable);
+//    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
+//    QTextEdit *te1=new QTextEdit();
+//    te1->setText(tr("ProjectManager"));
+//    dock->setWidget(te1);
+//    addDockWidget(Qt::LeftDockWidgetArea,dock);
 
 }
 
@@ -245,9 +269,34 @@ void MainWindow::New()
 
 void MainWindow::Open()
 {
-    QMessageBox msgBox;
-    msgBox.setText("test");
-    msgBox.exec();
+    //导入配置文件，txt文件（osgPNGdata.txt）
+    QString fileName =
+            QFileDialog::getOpenFileName(
+                this, tr("open file"), "",  tr("TxtFile(*.txt);;AllFile(*.*)"));
+
+//    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
+    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
+
+    //导入文件后，设置场景的节点
+    PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
+    osg::ref_ptr<osg::Group> scene=panoBallDS->ReadFile();
+
+
+    ViewerWidget* widget = new ViewerWidget(gw, scene);
+    //绑定点击事件
+    widget->addPickHandle();
+
+    widget->setGeometry( 100, 100, 800, 600 );
+    this->setCentralWidget(widget);
+
+    QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
+    dock->setFeatures(QDockWidget::DockWidgetMovable);
+    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
+    QTextEdit *te1=new QTextEdit();
+    te1->setText(tr("ProjectManager"));
+    dock->setWidget(te1);
+    addDockWidget(Qt::LeftDockWidgetArea,dock);
+
 }
 
 void MainWindow::Save()
