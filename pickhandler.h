@@ -48,4 +48,3 @@ public:
     osg::Matrixd lastMatrixd;//上一次的位姿矩阵
 };
 
-

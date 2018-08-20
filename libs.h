@@ -24,7 +24,6 @@
     #pragma comment(lib,"osgViewerd.lib")
     #pragma comment(lib,"osgVolumed.lib")
     #pragma comment(lib,"osgWidgetd.lib")
-
 #else
     #pragma comment(lib,"OpenThreads.lib")
     #pragma comment(lib,"osgAnimation.lib")
