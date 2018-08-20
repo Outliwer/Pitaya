@@ -16,14 +16,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    panoball.cpp \
-    pickhandler.cpp
+    drawtwoball.cpp \
+    pickhandler.cpp \
+    panoball.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
     osgview.h \
-    panoball.h \
-    pickhandler.h
+    drawtwoball.h \
+    pickhandler.h \
+    panoball.h
 
 FORMS    += mainwindow.ui
 
@@ -34,7 +36,14 @@ DISTFILES += \
     img/redo.png
 
 
-win32: LIBS += -LC:/OSG/OpenSceneGraph-3.6.1_lib_qt/lib/ -lOpenThreadsd
+#win32: LIBS += -LC:/OSG/OpenSceneGraph-3.6.1_lib_qt/lib/ -lOpenThreadsd
 
-INCLUDEPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
-DEPENDPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
+#INCLUDEPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
+#DEPENDPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
+
+
+
+win32: LIBS += -Llib/ -lOpenThreadsd
+
+INCLUDEPATH += include
+DEPENDPATH += include

@@ -1,9 +1,5 @@
 #ifndef PANOBALL_H
 #define PANOBALL_H
-#endif // PANOBALL_H
-
-#pragma once
-
 #include "libs.h"
 
 #include <osgViewer/Viewer>
@@ -48,4 +44,4 @@ public:
     static osg::ref_ptr<osg::Group> CreateLight(osg::ref_ptr<osg::Node> node);//给相应的节点添加光照
 };
 
-
+#endif // PANOBALL_H
