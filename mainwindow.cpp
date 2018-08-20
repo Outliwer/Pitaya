@@ -8,17 +8,19 @@
 #include <QMenu>
 
 #include <QMessageBox>
-
+#include <QPushButton>
 #include <QDockWidget>
 #include <QTextEdit>
-
+#include <QTextBrowser>
+#include <QDebug>
+#include <QTextStream>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QMouseEvent>
 #include <QLabel>
 #include <QPoint>
 #include <QSize>
-
+#include <QVector>
 #include <QtCore/QtCore>
 #include <QtGui/QtGui>
 
@@ -38,7 +40,7 @@
 #include "pickhandler.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),  
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -51,37 +53,27 @@ MainWindow::MainWindow(QWidget *parent) :
     CreateToolBar();
     CreateStatusBar();
 
-//    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
-
-//    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
-//    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
+    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
+    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
 
 
 
-//    ViewerWidget* widget = new ViewerWidget(gw, scene);
-//    widget->setGeometry( 100, 100, 800, 600 );
+    ViewerWidget* widget = new ViewerWidget(gw, scene);
+    widget->setGeometry( 100, 100, 800, 600 );
 
-////    //读取一个模型，此部分以后封装成函数
-////    osg::Group* view_root = new osg::Group;
-////    view_root->addDescription("view_root");
-////    view_root->setName("view_root");
+//    //读取一个模型，此部分以后封装成函数
+//    osg::Group* view_root = new osg::Group;
+//    view_root->addDescription("view_root");
+//    view_root->setName("view_root");
 
 
-////    //读一个osg文件看看效果
-////    osg::Node * p = osgDB::readNodeFile("cow.osg");
-////    view_root->addChild(p);
+//    //读一个osg文件看看效果
+//    osg::Node * p = osgDB::readNodeFile("cow.osg");
+//    view_root->addChild(p);
 
-////    QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), view_root );
-//    //设置中心区
-//    this->setCentralWidget(widget);
-
-//    QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
-//    dock->setFeatures(QDockWidget::DockWidgetMovable);
-//    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
-//    QTextEdit *te1=new QTextEdit();
-//    te1->setText(tr("ProjectManager"));
-//    dock->setWidget(te1);
-//    addDockWidget(Qt::LeftDockWidgetArea,dock);
+//    QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), view_root );
+    //设置中心区
+    this->setCentralWidget(widget);
 
 }
 
@@ -99,12 +91,25 @@ void MainWindow::CreateCamera()
 
 void MainWindow::CreateMenu()
 {
-    QMenuBar* pMenuBar = ui->menuBar;   // 菜单栏
+    //增加初始选择的菜单项
+    QDockWidget *dock=new QDockWidget(tr("DemoProject"),this);
+    dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
+    QPushButton *button= new QPushButton();
+    QString strText = QStringLiteral("示例Demo，用于展示OSG最基本图像");
+    button->setText(strText);
+    dock->setWidget(button);
 
+    addDockWidget(Qt::LeftDockWidgetArea,dock);
+
+
+
+
+    QMenuBar* pMenuBar = ui->menuBar;   // 菜单栏
     //　File菜单
     QMenu* File = new QMenu("File");
-    QAction* New = new QAction(QIcon(QPixmap(":/img/new.png")), "New");
-    File->addAction(New);
+//    QAction* New = new QAction(QIcon(QPixmap(":/img/new.png")), "New");
+//    File->addAction(New);
     QAction* Open = new QAction(QIcon(QPixmap(":/img/open.png")), "Open");
     File->addAction(Open);
     QAction* Save = new QAction(QIcon(QPixmap(":/img/save.png")), "Save");
@@ -115,7 +120,7 @@ void MainWindow::CreateMenu()
     File->addAction(Exit);
     pMenuBar->addMenu(File);
 
-    QObject::connect(New, SIGNAL(triggered(bool)), this, SLOT(New()));
+//    QObject::connect(New, SIGNAL(triggered(bool)), this, SLOT(New()));
     QObject::connect(Open, SIGNAL(triggered(bool)), this, SLOT(Open()));
     QObject::connect(Save, SIGNAL(triggered(bool)), this, SLOT(Save()));
     QObject::connect(SaveAs, SIGNAL(triggered(bool)), this, SLOT(SaveAs()));
@@ -267,6 +272,8 @@ void MainWindow::New()
     msgBox.exec();
 }
 
+
+
 void MainWindow::Open()
 {
     //导入配置文件，txt文件（osgPNGdata.txt）
@@ -274,8 +281,7 @@ void MainWindow::Open()
             QFileDialog::getOpenFileName(
                 this, tr("open file"), "",  tr("TxtFile(*.txt);;AllFile(*.*)"));
 
-//    osgQt::GraphicsWindowQt* gw = createGraphicsWindow( 50, 50, 640, 480 );
-    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
+    osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
 
     //导入文件后，设置场景的节点
     PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
@@ -288,15 +294,33 @@ void MainWindow::Open()
 
     widget->setGeometry( 100, 100, 800, 600 );
     this->setCentralWidget(widget);
-
     QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
-    dock->setFeatures(QDockWidget::DockWidgetMovable);
+    dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
     dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
-    QTextEdit *te1=new QTextEdit();
-    te1->setText(tr("ProjectManager"));
-    dock->setWidget(te1);
+    QPushButton *button= new QPushButton();
+    QStringList list = fileName.split("/");
+    QString a = list[list.size() - 1]; //a = "hello"
+    button->setText(a);
+    dock->setWidget(button);
     addDockWidget(Qt::LeftDockWidgetArea,dock);
+    qDebug() << "Can not open";
 
+    QObject::connect(button, SIGNAL(clicked(bool)), this, SLOT(emitSig()));
+
+    QObject::connect(this, SIGNAL(sigTest(QString)), this, SLOT(readFile(QString)));
+}
+
+void MainWindow::readFile(QString fileName)
+{
+    qDebug() << "Can not open";
+        printf("fileName");
+        QTextBrowser*Browser=new QTextBrowser;
+        QFile file(fileName);
+        if(!file.open(QFile::ReadOnly|QFile::Text))
+        qDebug() << "Can not open";
+        QTextStream in(&file);
+        Browser->setText(in.readAll());
+        Browser->show();
 }
 
 void MainWindow::Save()
@@ -424,4 +448,3 @@ void MainWindow::TechnicalSupport()
     msgBox.setText("test");
     msgBox.exec();
 }
-

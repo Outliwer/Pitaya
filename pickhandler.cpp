@@ -104,3 +104,4 @@ void PickHandler::pick(osgViewer::Viewer* view, float x, float y)
         }
     }
 }
+

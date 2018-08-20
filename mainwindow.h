@@ -18,14 +18,19 @@ public:
 private:
     Ui::MainWindow *ui;
 
+
 protected:
     void CreateMenu();
     void CreateToolBar();
     void CreateStatusBar();
     void CreateCamera();
 
+
+
     virtual void mouseMoveEvent(QMouseEvent *event);
 
+signals:
+    void sigTest(QString fileName);
 
 protected slots:
 
@@ -49,7 +54,11 @@ protected slots:
     void SeeHelp();
     void SendFeedback();
     void TechnicalSupport();
-
+    void readFile(QString fileName);
+    void emitSig()
+    {
+        emit sigTest("fileName");
+    }
 
 
 };
