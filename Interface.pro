@@ -35,15 +35,16 @@ RESOURCES += \
 DISTFILES += \
     img/redo.png
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSceneGraph-3.6.1_lib_qt/lib/ -losg
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSceneGraph-3.6.1_lib_qt/lib/ -losgd
+else:unix: LIBS += -L$$PWD/../OpenSceneGraph-3.6.1_lib_qt/lib/ -losg
 
-#win32: LIBS += -LC:/OSG/OpenSceneGraph-3.6.1_lib_qt/lib/ -lOpenThreadsd
+INCLUDEPATH += $$PWD/../OpenSceneGraph-3.6.1_lib_qt/include
+DEPENDPATH += $$PWD/../OpenSceneGraph-3.6.1_lib_qt/include
 
-#INCLUDEPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
-#DEPENDPATH += C:/OSG/OpenSceneGraph-3.6.1_lib_qt/include
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../osgQt_lib/lib/ -losgQt5
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../osgQt_lib/lib/ -losgQt5d
+else:unix: LIBS += -L$$PWD/../osgQt_lib/lib/ -losgQt5
 
-
-
-win32: LIBS += -Llib/ -lOpenThreadsd
-
-INCLUDEPATH += include
-DEPENDPATH += include
+INCLUDEPATH += $$PWD/../osgQt_lib/include
+DEPENDPATH += $$PWD/../osgQt_lib/include
