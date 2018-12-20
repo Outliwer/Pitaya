@@ -45,24 +45,26 @@ OBJECTS_DIR   = debug
 
 SOURCES       = ..\main.cpp \
 		..\mainwindow.cpp \
-		..\pickhandler.cpp \
-		..\panoball.cpp debug\qrc_res.cpp \
+		..\osgWidget\panoBall\panoball.cpp \
+		..\osgHandler\pickhandler.cpp debug\qrc_res.cpp \
 		debug\moc_mainwindow.cpp
 OBJECTS       = debug\main.obj \
 		debug\mainwindow.obj \
-		debug\pickhandler.obj \
 		debug\panoball.obj \
+		debug\pickhandler.obj \
 		debug\qrc_res.obj \
 		debug\moc_mainwindow.obj
 
 DIST          = img/redo.png ..\mainwindow.h \
 		..\libs.h \
-		..\osgview.h \
-		..\pickhandler.h \
-		..\panoball.h ..\main.cpp \
+		pickhandler.h \
+		panoball.h \
+		..\osgWidget\panoBall\panoball.h \
+		..\osgHandler\pickhandler.h \
+		..\osgView\osgview.h ..\main.cpp \
 		..\mainwindow.cpp \
-		..\pickhandler.cpp \
-		..\panoball.cpp
+		..\osgWidget\panoBall\panoball.cpp \
+		..\osgHandler\pickhandler.cpp
 QMAKE_TARGET  = menuToolbarStatusBar
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = menuToolbarStatusBar.exe
@@ -112,6 +114,26 @@ DESTDIR_TARGET = debug\menuToolbarStatusBar.exe
 	$<
 <<
 
+{..\osgWidget\panoBall}.cpp{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgWidget\panoBall}.cc{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgWidget\panoBall}.cxx{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgWidget\panoBall}.c{debug\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
 {.}.cpp{debug\}.obj::
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
 	$<
@@ -132,6 +154,26 @@ DESTDIR_TARGET = debug\menuToolbarStatusBar.exe
 	$<
 <<
 
+{..\osgHandler}.cpp{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgHandler}.cc{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgHandler}.cxx{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{..\osgHandler}.c{debug\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
 ####### Build rules
 
 first: all
@@ -148,10 +190,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) menuToolbarStatusBar.zip $(SOURCES) $(DIST) ..\Interface.pro C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\spec_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\angle.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\msvc-base.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\msvc-desktop.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\qconfig.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_charts.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_script.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webengine.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webengine_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecore.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecore_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginewidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginewidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webview.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt_functions.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt_config.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\win32-msvc2015\qmake.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\toolchain.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\default_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\resolve_config.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\default_post.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\build_pass.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qml_debug.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\rtti.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\precompile_header.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\warn_on.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\resources.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\moc.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\uic.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qmake_use.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\file_copies.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\windows.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exceptions.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\yacc.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\lex.prf ..\Interface.pro ..\res.qrc C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\qtmaind.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5OpenGLd.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Widgetsd.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Guid.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Cored.prl   ..\res.qrc C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\data\dummy.cpp ..\mainwindow.h ..\libs.h ..\osgview.h ..\pickhandler.h ..\panoball.h ..\main.cpp ..\mainwindow.cpp ..\pickhandler.cpp ..\panoball.cpp ..\mainwindow.ui    
+	$(ZIP) menuToolbarStatusBar.zip $(SOURCES) $(DIST) ..\Interface.pro C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\spec_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\angle.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\msvc-base.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\common\msvc-desktop.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\qconfig.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_charts.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_charts_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_datavisualization.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_datavisualization_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_networkauth.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_networkauth_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_purchasing.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_purchasing_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_script.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_script_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webengine.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webengine_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecore.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecore_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginewidgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webenginewidgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webview.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt_functions.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt_config.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\win32-msvc2015\qmake.conf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\toolchain.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\default_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\resolve_config.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\default_post.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\build_pass.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qml_debug.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\rtti.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\precompile_header.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\warn_on.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qt.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\resources.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\moc.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\uic.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\qmake_use.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\file_copies.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\win32\windows.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\exceptions.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\yacc.prf C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\lex.prf ..\Interface.pro ..\res.qrc C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\qtmaind.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5OpenGLd.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Widgetsd.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Guid.prl C:\Qt\Qt5.8.0\5.8\msvc2015_64\lib\Qt5Cored.prl   ..\res.qrc C:\Qt\Qt5.8.0\5.8\msvc2015_64\mkspecs\features\data\dummy.cpp ..\mainwindow.h ..\libs.h pickhandler.h panoball.h ..\osgWidget\panoBall\panoball.h ..\osgHandler\pickhandler.h ..\osgView\osgview.h ..\main.cpp ..\mainwindow.cpp ..\osgWidget\panoBall\panoball.cpp ..\osgHandler\pickhandler.cpp ..\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.obj debug\mainwindow.obj debug\pickhandler.obj debug\panoball.obj debug\qrc_res.obj debug\moc_mainwindow.obj
+	-$(DEL_FILE) debug\main.obj debug\mainwindow.obj debug\panoball.obj debug\pickhandler.obj debug\qrc_res.obj debug\moc_mainwindow.obj
 	-$(DEL_FILE) debug\menuToolbarStatusBar.exp debug\menuToolbarStatusBar.vc.pdb debug\menuToolbarStatusBar.ilk debug\menuToolbarStatusBar.idb
 
 distclean: clean 
@@ -1020,241 +1062,9 @@ debug\mainwindow.obj: ..\mainwindow.cpp ../mainwindow.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qlayoutitem.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qgridlayout.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\QFileDialog \
-		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qfiledialog.h \
-		../osgview.h \
-		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtCore\QTimer \
-		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtGui\QPaintEvent \
-		../pickhandler.h \
-		../panoball.h \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MatrixTransform \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShapeDrawable \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\WriteFile \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Scribe \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Effect \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Technique \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Material \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LineWidth
+		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qfiledialog.h
 
-debug\pickhandler.obj: ..\pickhandler.cpp ../pickhandler.h \
-		../panoball.h \
-		../libs.h \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Viewer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ArgumentParser \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Config \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ref_ptr \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ApplicationUsage \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Referenced \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\ScopedLock \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Mutex \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Exports \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Config \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Atomic \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\NodeVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Node \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Object \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CopyOp \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Notify \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\StateSet \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\StateAttribute \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Callback \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\UserDataContainer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Shader \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLExtensions \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLDefines \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GL \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Types \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\buffered_value \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\DisplaySettings \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrixd \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3d \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2d \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2f \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Math \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3f \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4d \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4f \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Quat \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Uniform \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Array \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MixinVector \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2b \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3b \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4b \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2s \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3s \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4s \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2i \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3i \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4i \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2ub \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3ub \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4ub \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2us \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3us \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4us \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2ui \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3ui \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4ui \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2 \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3 \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4 \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrix \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrixf \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BufferObject \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\FrameStamp \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLObjects \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BoundingSphere \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BoundingBox \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueMap \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueObject \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueStack \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Geode \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Drawable \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Shape \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Plane \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\PrimitiveSet \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\RenderInfo \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\State \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Observer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Timer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\VertexArrayState \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AttributeDispatchers \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShaderComposer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Program \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Polytope \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\fast_back_stack \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Viewport \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsCostEstimator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\View \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Camera \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Transform \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Group \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ColorMask \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullSettings \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ClearNode \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Image \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsContext \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsThread \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\OperationThread \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\observer_ptr \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Thread \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Affinity \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Barrier \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Condition \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Block \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Stats \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Light \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Billboard \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LOD \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Switch \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LightSource \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Projection \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\OccluderNode \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ConvexPlanarOccluder \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ConvexPlanarPolygon \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ScriptEngine \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIEventAdapter \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Event \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIEventHandler \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventHandler \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIActionAdapter \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\LineSegmentIntersector \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\IntersectionVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventQueue \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\UpdateVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\GraphicsWindow \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\View \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\PolytopeIntersector \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\SceneView \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CollectOccludersVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullStack \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullingSet \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShadowVolumeOccluder \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\CullVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\StateGraph \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderLeaf \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderStage \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\FrameBufferObject \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderBin \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\PositionalStateContainer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\CameraManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CoordinateSystemNode \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Device \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Scene \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DatabasePager \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\PagedLOD \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ObserverNodePath \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\IncrementalCompileOperation \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\GLObjectsVisitor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Geometry \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\SharedStateManager \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ReaderWriter \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\AuthenticationMap \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Options \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Callbacks \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\FileCache \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DatabaseRevisions \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ObjectCache \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImagePager \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerBase \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Keystone \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MatrixTransform \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShapeDrawable \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\OrbitManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\StandardManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ReadFile \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Registry \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\ReentrantMutex \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\KdTree \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DynamicLibrary \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DotOsgWrapper \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Input \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Output \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\fstream \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ObjectWrapper \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Serializer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\InputStream \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Endian \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\StreamOperator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DataTypes \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\OutputStream \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Version \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImageProcessor \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\WriteFile \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture2D \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerEventHandlers \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AnimationPath \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Text \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\TextBase \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\String \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\KerningType \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Font \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Glyph \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Style \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\AnimationPathManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Scribe \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Effect \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Technique \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Material \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LineWidth \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\TrackballManipulator
-
-debug\panoball.obj: ..\panoball.cpp ../panoball.h \
+debug\panoball.obj: ..\osgWidget\panoBall\panoball.cpp ../osgWidget/panoBall/panoball.h \
 		../libs.h \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Viewer \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ArgumentParser \
@@ -1450,6 +1260,219 @@ debug\panoball.obj: ..\panoball.cpp ../panoball.h \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture2D \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv
+
+debug\pickhandler.obj: ..\osgHandler\pickhandler.cpp ../osgHandler/pickhandler.h \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Viewer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ArgumentParser \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Config \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ref_ptr \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ApplicationUsage \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Referenced \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\ScopedLock \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Mutex \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Exports \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Config \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Atomic \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\NodeVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Node \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Object \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CopyOp \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Notify \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\StateSet \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\StateAttribute \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Callback \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\UserDataContainer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Shader \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLExtensions \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLDefines \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GL \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Types \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\buffered_value \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\DisplaySettings \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrixd \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3d \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2d \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2f \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Math \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3f \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4d \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4f \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Quat \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Uniform \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Array \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MixinVector \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2b \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3b \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4b \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2s \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3s \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4s \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2i \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3i \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4i \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2ub \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3ub \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4ub \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2us \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3us \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4us \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2ui \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3ui \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4ui \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec2 \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec3 \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Vec4 \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrix \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Matrixf \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BufferObject \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\FrameStamp \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GLObjects \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BoundingSphere \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\BoundingBox \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueMap \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueObject \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ValueStack \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Geode \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Drawable \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Shape \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Plane \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\PrimitiveSet \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\RenderInfo \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\State \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Observer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Timer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\VertexArrayState \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AttributeDispatchers \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShaderComposer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Program \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Polytope \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\fast_back_stack \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Viewport \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsCostEstimator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\View \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Camera \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Transform \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Group \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ColorMask \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullSettings \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ClearNode \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Image \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsContext \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\GraphicsThread \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\OperationThread \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\observer_ptr \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Thread \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Affinity \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Barrier \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Condition \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\Block \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Stats \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Light \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Billboard \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LOD \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Switch \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LightSource \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Projection \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\OccluderNode \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ConvexPlanarOccluder \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ConvexPlanarPolygon \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ScriptEngine \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIEventAdapter \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Event \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIEventHandler \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventHandler \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\GUIActionAdapter \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\LineSegmentIntersector \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\IntersectionVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\EventQueue \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\UpdateVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\GraphicsWindow \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\View \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\PolytopeIntersector \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\SceneView \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CollectOccludersVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullStack \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CullingSet \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShadowVolumeOccluder \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\CullVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\StateGraph \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderLeaf \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderStage \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\FrameBufferObject \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\RenderBin \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\PositionalStateContainer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\CameraManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\CoordinateSystemNode \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\Device \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Scene \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DatabasePager \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\PagedLOD \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ObserverNodePath \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\IncrementalCompileOperation \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\GLObjectsVisitor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Geometry \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\SharedStateManager \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ReaderWriter \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\AuthenticationMap \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Options \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Callbacks \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\FileCache \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DatabaseRevisions \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ObjectCache \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImagePager \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerBase \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Keystone \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerEventHandlers \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AnimationPath \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Text \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\TextBase \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\String \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\KerningType \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Font \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Glyph \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture2D \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Style \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\AnimationPathManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\fstream \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MatrixTransform \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ReadFile \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Registry \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\ReentrantMutex \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\KdTree \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DynamicLibrary \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DotOsgWrapper \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Input \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Output \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ObjectWrapper \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Serializer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\InputStream \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Endian \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\StreamOperator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DataTypes \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\OutputStream \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Version \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImageProcessor \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\WriteFile \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Scribe \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Effect \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Technique \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Material \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LineWidth \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\TrackballManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\OrbitManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\StandardManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator
 
 debug\qrc_res.obj: debug\qrc_res.cpp 
 

@@ -16,14 +16,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    pickhandler.cpp \
-    panoball.cpp
+    osgWidget/panoBall/panoball.cpp \
+    osgHandler/pickhandler.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
-    osgview.h \
     pickhandler.h \
-    panoball.h
+    panoball.h \
+    osgWidget/panoBall/panoball.h \
+    osgHandler/pickhandler.h \
+    osgView/osgview.h
 
 FORMS    += mainwindow.ui
 

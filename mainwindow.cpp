@@ -34,10 +34,10 @@
 
 #include <QFileDialog>
 
-#include "osgview.h"
+#include "./osgView/osgview.h"
 
-#include "panoball.h"
-#include "pickhandler.h"
+#include "./osgWidget/panoBall/panoball.h"
+#include "./osgHandler/pickhandler.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
