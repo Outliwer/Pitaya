@@ -55,9 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
     osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
-
-
-
     ViewerWidget* widget = new ViewerWidget(gw, scene);
     widget->setGeometry( 100, 100, 800, 600 );
 
