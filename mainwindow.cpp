@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->resize( QSize( 800, 600 ));
+    this->setWindowState(Qt::WindowMaximized);
     // 鼠标追踪
     this->setMouseTracking(true);
     ui->centralWidget->setMouseTracking(true);

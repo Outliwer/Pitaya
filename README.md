@@ -10,5 +10,6 @@
 - 教程
   - [`osg`控件的显示](./docs/chapter1.md)
   - [`osg`控键与其他`qt`控件的嵌套使用](./docs/chapter2.md)
-  - 
+- 一些小`tips`
+  - [窗体设置](./dosc/tips1.md)
 
