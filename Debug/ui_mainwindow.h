@@ -13,9 +13,11 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
@@ -28,6 +30,8 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QHBoxLayout *horizontalLayout;
+    QSplitter *splitter;
     QTreeView *treeView;
     QTableView *tableView;
     QMenuBar *menuBar;
@@ -38,19 +42,29 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(1200, 900);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        treeView = new QTreeView(centralWidget);
+        horizontalLayout = new QHBoxLayout(centralWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        splitter = new QSplitter(centralWidget);
+        splitter->setObjectName(QStringLiteral("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        treeView = new QTreeView(splitter);
         treeView->setObjectName(QStringLiteral("treeView"));
-        treeView->setGeometry(QRect(0, 0, 131, 241));
-        tableView = new QTableView(centralWidget);
+        splitter->addWidget(treeView);
+        tableView = new QTableView(splitter);
         tableView->setObjectName(QStringLiteral("tableView"));
-        tableView->setGeometry(QRect(140, 20, 256, 192));
+        splitter->addWidget(tableView);
+
+        horizontalLayout->addWidget(splitter);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 21));
+        menuBar->setGeometry(QRect(0, 0, 1200, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

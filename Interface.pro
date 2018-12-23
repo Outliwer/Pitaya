@@ -17,7 +17,9 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     osgWidget/panoBall/panoball.cpp \
-    osgHandler/pickhandler.cpp
+    osgHandler/pickhandler.cpp \
+    qtWidget/treeview/treeitem.cpp \
+    qtWidget/treeview/treemodel.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
@@ -25,7 +27,9 @@ HEADERS  += mainwindow.h \
     panoball.h \
     osgWidget/panoBall/panoball.h \
     osgHandler/pickhandler.h \
-    osgView/osgview.h
+    osgView/osgview.h \
+    qtWidget/treeview/treeitem.h \
+    qtWidget/treeview/treemodel.h
 
 FORMS    += mainwindow.ui
 

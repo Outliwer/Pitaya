@@ -35,7 +35,7 @@
 #include <QFileDialog>
 
 #include "./osgView/osgview.h"
-
+#include "./qtWidget/treeview/treemodel.h"
 #include "./osgWidget/panoBall/panoball.h"
 #include "./osgHandler/pickhandler.h"
 
@@ -44,16 +44,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->resize( QSize( 800, 600 ));
-    this->setWindowState(Qt::WindowMaximized);
+    this->resize( QSize( 1200, 900 ));
+    this->setWindowState(Qt::WindowMinimized);
+    ui->splitter->setStretchFactor(0, 3);
+    ui->splitter->setStretchFactor(1, 14);
     // 鼠标追踪
-    this->setMouseTracking(true);
-    ui->centralWidget->setMouseTracking(true);
+    //this->setMouseTracking(true);
+    //ui->centralWidget->setMouseTracking(true);
 
     CreateMenu();
     CreateToolBar();
     CreateStatusBar();
-
+    CreateTreeView();
     /*
     osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
     osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
@@ -72,6 +74,30 @@ MainWindow::~MainWindow()
 }
 
 
+
+void MainWindow::CreateTableView()
+{
+
+}
+
+
+void MainWindow::CreateTreeView()
+{
+    QStringList headers;
+    headers << tr("Title");
+
+    QFile file(":/text/defaultTree.txt");
+    file.open(QIODevice::ReadOnly);
+    TreeModel *model = new TreeModel(headers, file.readAll());
+    file.close();
+    QTreeView *pTreeView = ui->treeView;
+    pTreeView->setModel(model);
+    qDebug() << model->columnCount();
+    for (int column = 0; column < model->columnCount(); ++column)
+        pTreeView->resizeColumnToContents(column);
+
+}
+
 void MainWindow::CreateCamera()
 {
 
@@ -80,6 +106,7 @@ void MainWindow::CreateCamera()
 void MainWindow::CreateMenu()
 {
 
+    /*
     //增加初始选择的菜单项
     QDockWidget *dock=new QDockWidget(tr("DemoProject"),this);
     dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -90,6 +117,7 @@ void MainWindow::CreateMenu()
     dock->setWidget(button);
 
     addDockWidget(Qt::LeftDockWidgetArea,dock);
+    */
 
     QMenuBar* pMenuBar = ui->menuBar;   // 菜单栏
     //　File菜单
@@ -234,8 +262,8 @@ void MainWindow::CreateToolBar()
 
 void MainWindow::CreateStatusBar()
 {
-    QStatusBar* pStatusBar = ui->statusBar;
-    pStatusBar->showMessage(tr("status"));
+    //QStatusBar* pStatusBar = ui->statusBar;
+    //pStatusBar->showMessage(tr("status"));
 
 }
 
@@ -243,12 +271,16 @@ void MainWindow::CreateStatusBar()
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+
     // 鼠标事件包含了全局坐标与本地坐标，在此只需要本地坐标即可
     QPointF pt = event->localPos();
+    ui->statusBar->showMessage(QString("The program is running normally"));
+    /*
     // 将坐标点格式化
     QString strShow = QString("Location:  X:%1 Y:%2").arg(pt.x()).arg(pt.y());
     // 在SatusBar中实时显示
     ui->statusBar->showMessage(strShow);
+    */
 }
 
 void MainWindow::New()

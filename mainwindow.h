@@ -24,9 +24,8 @@ protected:
     void CreateToolBar();
     void CreateStatusBar();
     void CreateCamera();
-
-
-
+    void CreateTableView();
+    void CreateTreeView();
     virtual void mouseMoveEvent(QMouseEvent *event);
 
 signals:
