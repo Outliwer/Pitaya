@@ -32,8 +32,7 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     res.qrc
 
-DISTFILES += \
-    img/redo.png
+DISTFILES +=
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSceneGraph-3.6.1_lib_qt/lib/ -losg
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSceneGraph-3.6.1_lib_qt/lib/ -losgd

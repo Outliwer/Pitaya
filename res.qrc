@@ -4,7 +4,6 @@
         <file>img/2.png</file>
         <file>img/3.png</file>
         <file>img/undo.png</file>
-        <file>img/redo.png</file>
         <file>img/aerialtriangulation.png</file>
         <file>img/attribution.png</file>
         <file>img/cloudmodel.png</file>
@@ -22,5 +21,7 @@
         <file>img/sendfeedback.png</file>
         <file>img/statusbar.png</file>
         <file>img/technicalsupport.png</file>
+        <file>img/redo.png</file>
+        <file>text/defaultTree.txt</file>
     </qresource>
 </RCC>

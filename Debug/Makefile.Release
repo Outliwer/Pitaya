@@ -55,7 +55,7 @@ OBJECTS       = release\main.obj \
 		release\qrc_res.obj \
 		release\moc_mainwindow.obj
 
-DIST          = img/redo.png ..\mainwindow.h \
+DIST          =  ..\mainwindow.h \
 		..\libs.h \
 		pickhandler.h \
 		panoball.h \
@@ -1062,7 +1062,23 @@ release\mainwindow.obj: ..\mainwindow.cpp ../mainwindow.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qlayoutitem.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qgridlayout.h \
 		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\QFileDialog \
-		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qfiledialog.h
+		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtWidgets\qfiledialog.h \
+		../osgView/osgview.h \
+		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtCore\QTimer \
+		C:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtGui\QPaintEvent \
+		../osgHandler/pickhandler.h \
+		../osgWidget/panoBall/panoball.h \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MatrixTransform \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShapeDrawable \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\WriteFile \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Scribe \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Effect \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Technique \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Material \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LineWidth
 
 release\panoball.obj: ..\osgWidget\panoBall\panoball.cpp ../osgWidget/panoBall/panoball.h \
 		../libs.h \
@@ -1262,6 +1278,8 @@ release\panoball.obj: ..\osgWidget\panoBall\panoball.cpp ../osgWidget/panoBall/p
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv
 
 release\pickhandler.obj: ..\osgHandler\pickhandler.cpp ../osgHandler/pickhandler.h \
+		../osgWidget/panoBall/panoball.h \
+		../libs.h \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Viewer \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ArgumentParser \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Export \
@@ -1429,21 +1447,11 @@ release\pickhandler.obj: ..\osgHandler\pickhandler.cpp ../osgHandler/pickhandler
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImagePager \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerBase \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\Keystone \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerEventHandlers \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AnimationPath \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Text \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\TextBase \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\String \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Export \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\KerningType \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Font \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Glyph \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture2D \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Style \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\AnimationPathManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\fstream \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\MatrixTransform \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\ShapeDrawable \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\OrbitManipulator \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\StandardManipulator \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ReadFile \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Registry \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\OpenThreads\ReentrantMutex \
@@ -1452,6 +1460,7 @@ release\pickhandler.obj: ..\osgHandler\pickhandler.cpp ../osgHandler/pickhandler
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\DotOsgWrapper \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Input \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Output \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\fstream \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ObjectWrapper \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\Serializer \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\InputStream \
@@ -1462,17 +1471,27 @@ release\pickhandler.obj: ..\osgHandler\pickhandler.cpp ../osgHandler/pickhandler
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Version \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\ImageProcessor \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgDB\WriteFile \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Texture2D \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgViewer\ViewerEventHandlers \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\AnimationPath \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Text \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\TextBase \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\String \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Export \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\KerningType \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Font \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\TexEnv \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Glyph \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgText\Style \
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\AnimationPathManipulator \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Scribe \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Export \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Effect \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgFX\Technique \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\Material \
 		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osg\LineWidth \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgUtil\Optimizer \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\TrackballManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\OrbitManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\StandardManipulator \
-		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\NodeTrackerManipulator
+		..\..\OpenSceneGraph-3.6.1_lib_qt\include\osgGA\TrackballManipulator
 
 release\qrc_res.obj: release\qrc_res.cpp 
 
