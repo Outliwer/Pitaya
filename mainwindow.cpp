@@ -54,12 +54,14 @@ MainWindow::MainWindow(QWidget *parent) :
     CreateToolBar();
     CreateStatusBar();
 
+    /*
     osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
     osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
     ViewerWidget* widget = new ViewerWidget(gw, scene);
     widget->setGeometry( 100, 100, 800, 600 );
 
     this->setCentralWidget(widget);
+    */
 
 }
 
@@ -77,6 +79,7 @@ void MainWindow::CreateCamera()
 
 void MainWindow::CreateMenu()
 {
+
     //增加初始选择的菜单项
     QDockWidget *dock=new QDockWidget(tr("DemoProject"),this);
     dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -87,9 +90,6 @@ void MainWindow::CreateMenu()
     dock->setWidget(button);
 
     addDockWidget(Qt::LeftDockWidgetArea,dock);
-
-
-
 
     QMenuBar* pMenuBar = ui->menuBar;   // 菜单栏
     //　File菜单
