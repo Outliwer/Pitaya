@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     osgWidget/panoBall/panoball.cpp \
     osgHandler/pickhandler.cpp \
     qtWidget/treeview/treeitem.cpp \
-    qtWidget/treeview/treemodel.cpp
+    qtWidget/treeview/treemodel.cpp \
+    qtWidget/tableview/generaltab.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     osgHandler/pickhandler.h \
     osgView/osgview.h \
     qtWidget/treeview/treeitem.h \
-    qtWidget/treeview/treemodel.h
+    qtWidget/treeview/treemodel.h \
+    qtWidget/tableview/generaltab.h
 
 FORMS    += mainwindow.ui
 

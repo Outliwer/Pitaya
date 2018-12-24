@@ -6,6 +6,10 @@
 namespace Ui {
 class MainWindow;
 }
+QT_BEGIN_NAMESPACE
+class QTreeView;
+class QPlainTextEdit;
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -17,7 +21,15 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
+    QWidget *pResultWidget;
+    QWidget *pViewWidget;
+    QTabWidget *pTabWidget;
+    QTreeView *pTreeView;
+    QMenuBar* pMenuBar;
+    QToolBar* pToolBar;
+    QStatusBar* pStatusBar;
+    QPlainTextEdit *textEdit;
+    QString curFile;
 
 protected:
     void CreateMenu();

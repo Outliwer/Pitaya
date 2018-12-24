@@ -56,14 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     CreateToolBar();
     CreateStatusBar();
     CreateTreeView();
-    /*
-    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
-    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
-    ViewerWidget* widget = new ViewerWidget(gw, scene);
-    widget->setGeometry( 100, 100, 800, 600 );
-
-    this->setCentralWidget(widget);
-    */
+    CreateTableView();
 
 }
 
@@ -77,7 +70,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::CreateTableView()
 {
-
+    pTabWidget = ui->tabWidget;
+    //pTabWidget->addTab(new GeneralTab(fileInfo), tr("View"));
+    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
+    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
+    pTabWidget->addTab(new ViewerWidget(gw, scene), tr("Result"));
 }
 
 
@@ -90,9 +87,8 @@ void MainWindow::CreateTreeView()
     file.open(QIODevice::ReadOnly);
     TreeModel *model = new TreeModel(headers, file.readAll());
     file.close();
-    QTreeView *pTreeView = ui->treeView;
+    pTreeView = ui->treeView;
     pTreeView->setModel(model);
-    qDebug() << model->columnCount();
     for (int column = 0; column < model->columnCount(); ++column)
         pTreeView->resizeColumnToContents(column);
 
@@ -119,7 +115,7 @@ void MainWindow::CreateMenu()
     addDockWidget(Qt::LeftDockWidgetArea,dock);
     */
 
-    QMenuBar* pMenuBar = ui->menuBar;   // 菜单栏
+    pMenuBar = ui->menuBar;   // 菜单栏
     //　File菜单
     QMenu* File = new QMenu("File");
 //    QAction* New = new QAction(QIcon(QPixmap(":/img/new.png")), "New");
@@ -225,8 +221,7 @@ void MainWindow::CreateMenu()
 
 void MainWindow::CreateToolBar()
 {
-    // 获取到ToolBar
-    QToolBar* pToolBar = ui->mainToolBar;
+    pToolBar = ui->mainToolBar;
 
     // Action
     QAction* Undo= new QAction(QIcon(QPixmap(":/img/undo.png")),"Undo");;
@@ -254,7 +249,7 @@ void MainWindow::CreateToolBar()
     QObject::connect(New, SIGNAL(triggered(bool)), this, SLOT(New()));
     QObject::connect(Open, SIGNAL(triggered(bool)), this, SLOT(Open()));
     QObject::connect(Save, SIGNAL(triggered(bool)), this, SLOT(Save()));
-    QObject::connect(SaveAs, SIGNAL(triggered(bool)), this, SLOT(SavaAs()));
+    QObject::connect(SaveAs, SIGNAL(triggered(bool)), this, SLOT(SaveAs()));
     QObject::connect(Cloudmodel, SIGNAL(triggered(bool)), this, SLOT(Cloudmodel()));
     QObject::connect(OSGimg, SIGNAL(triggered(bool)), this, SLOT(OSGimg()));
 
@@ -311,6 +306,8 @@ void MainWindow::Open()
     widget->addPickHandle();
 
     widget->setGeometry( 100, 100, 800, 600 );
+    pTabWidget->addTab(new ViewerWidget(gw, scene), tr("Result"));
+    /*
     this->setCentralWidget(widget);
     QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
     dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -326,6 +323,7 @@ void MainWindow::Open()
     QObject::connect(button, SIGNAL(clicked(bool)), this, SLOT(emitSig()));
 
     QObject::connect(this, SIGNAL(sigTest(QString)), this, SLOT(readFile(QString)));
+    */
 }
 
 void MainWindow::readFile(QString fileName)

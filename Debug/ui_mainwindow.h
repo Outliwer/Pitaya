@@ -19,7 +19,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
@@ -33,7 +33,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter;
     QTreeView *treeView;
-    QTableView *tableView;
+    QTabWidget *tabWidget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,9 +55,9 @@ public:
         treeView = new QTreeView(splitter);
         treeView->setObjectName(QStringLiteral("treeView"));
         splitter->addWidget(treeView);
-        tableView = new QTableView(splitter);
-        tableView->setObjectName(QStringLiteral("tableView"));
-        splitter->addWidget(tableView);
+        tabWidget = new QTabWidget(splitter);
+        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        splitter->addWidget(tabWidget);
 
         horizontalLayout->addWidget(splitter);
 
@@ -74,6 +74,9 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
+
+        tabWidget->setCurrentIndex(-1);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
