@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QXmlNamePool>
+#include "./tools/xml/filetree.h"
 namespace Ui {
 class MainWindow;
 }
@@ -18,7 +19,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+private:
+    void loadDirectory(const QString &directory);
 private:
     Ui::MainWindow *ui;
     QWidget *pResultWidget;
@@ -30,6 +32,9 @@ private:
     QStatusBar* pStatusBar;
     QPlainTextEdit *textEdit;
     QString curFile;
+    const QXmlNamePool  m_namePool;
+    const FileTree      m_fileTree;
+    QXmlNodeModelIndex  m_fileNode;
 
 protected:
     void CreateMenu();
@@ -66,12 +71,7 @@ protected slots:
     void SendFeedback();
     void TechnicalSupport();
     void readFile(QString fileName);
-    void emitSig()
-    {
-        emit sigTest("fileName");
-    }
-
-
+    void removeSubTab(int index);
 };
 
 #endif // MAINWINDOW_H

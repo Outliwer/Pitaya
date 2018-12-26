@@ -7,6 +7,7 @@
 QT += core
 QT -= gui
 QT += opengl
+QT += xmlpatterns
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,7 +21,8 @@ SOURCES += main.cpp\
     osgHandler/pickhandler.cpp \
     qtWidget/treeview/treeitem.cpp \
     qtWidget/treeview/treemodel.cpp \
-    qtWidget/tableview/generaltab.cpp
+    qtWidget/tableview/generaltab.cpp \
+    tools/xml/filetree.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
@@ -31,7 +33,8 @@ HEADERS  += mainwindow.h \
     osgView/osgview.h \
     qtWidget/treeview/treeitem.h \
     qtWidget/treeview/treemodel.h \
-    qtWidget/tableview/generaltab.h
+    qtWidget/tableview/generaltab.h \
+    tools/xml/filetree.h
 
 FORMS    += mainwindow.ui
 

@@ -23,5 +23,6 @@
         <file>img/technicalsupport.png</file>
         <file>img/redo.png</file>
         <file>text/defaultTree.txt</file>
+        <file>text/wholeTree.xq</file>
     </qresource>
 </RCC>

@@ -1,69 +1,8 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include <QtCore/QUrl>
 #include <QtCore/QVariant>
 #include <QtXmlPatterns/QXmlNamePool>
 #include "filetree.h"
 
-/*
-The model has two types of nodes: elements & attributes.
-
-    <directory name="">
-        <file name="">
-        </file>
-    </directory>
-
-  In QXmlNodeModelIndex we store two values. QXmlNodeIndex::data()
-  is treated as a signed int, and it is an index into m_fileInfos
-  unless it is -1, in which case it has no meaning and the value
-  of QXmlNodeModelIndex::additionalData() is a Type name instead.
- */
-
-/*!
-  The constructor passes \a pool to the base class, then loads an
-  internal vector with an instance of QXmlName for each of the
-  strings "file", "directory", "fileName", "filePath", "size",
-  "mimeType", and "suffix".
- */
-//! [2]
 FileTree::FileTree(const QXmlNamePool& pool)
   : QSimpleXmlNodeModel(pool),
     m_filterAllowAll(QDir::AllEntries |
@@ -82,16 +21,7 @@ FileTree::FileTree(const QXmlNamePool& pool)
     m_names[AttributeMIMEType]  = QXmlName(np, QLatin1String("mimeType"));
     m_names[AttributeSuffix]    = QXmlName(np, QLatin1String("suffix"));
 }
-//! [2]
 
-/*!
-  Returns the QXmlNodeModelIndex for the model node representing
-  the directory \a dirName.
-
-  It calls QDir::cleanPath(), because an instance of QFileInfo
-  constructed for a path ending in '/' will return the empty string in
-  fileName(), instead of the directory name.
-*/
 QXmlNodeModelIndex FileTree::nodeFor(const QString& dirName) const
 {
     QFileInfo dirInfo(QDir::cleanPath(dirName));
@@ -99,17 +29,12 @@ QXmlNodeModelIndex FileTree::nodeFor(const QString& dirName) const
     return toNodeIndex(dirInfo);
 }
 
-/*!
-  Since the value will always be in m_fileInfos, it is safe for
-  us to return a const reference to it.
- */
-//! [6]
+
 const QFileInfo&
 FileTree::toFileInfo(const QXmlNodeModelIndex &nodeIndex) const
 {
     return m_fileInfos.at(nodeIndex.data());
 }
-//! [6]
 
 /*!
   Returns the model node index for the node specified by the

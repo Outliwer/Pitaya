@@ -1,9 +1,6 @@
 #ifndef LIBS_H
 #define LIBS_H
 
-#endif // LIBS_H
-
-
 #ifdef _DEBUG
     #pragma comment(lib,"OpenThreadsd.lib")
     #pragma comment(lib,"osgAnimationd.lib")
@@ -45,3 +42,5 @@
     #pragma comment(lib,"osgVolume.lib")
     #pragma comment(lib,"osgWidget.lib")
 #endif
+
+#endif // LIBS_H

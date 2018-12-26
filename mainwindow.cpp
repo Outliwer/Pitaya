@@ -6,7 +6,6 @@
 
 #include <QMenuBar>
 #include <QMenu>
-
 #include <QMessageBox>
 #include <QPushButton>
 #include <QDockWidget>
@@ -23,7 +22,7 @@
 #include <QVector>
 #include <QtCore/QtCore>
 #include <QtGui/QtGui>
-
+#include <QtXmlPatterns>
 #include "libs.h"
 #include <osgDB/ReadFile>
 #include <osgGA/TrackballManipulator>
@@ -38,10 +37,11 @@
 #include "./qtWidget/treeview/treemodel.h"
 #include "./osgWidget/panoBall/panoball.h"
 #include "./osgHandler/pickhandler.h"
+#include "./qtWidget/tableview/generaltab.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), m_fileTree(m_namePool)
 {
     ui->setupUi(this);
     this->resize( QSize( 1200, 900 ));
@@ -71,20 +71,26 @@ MainWindow::~MainWindow()
 void MainWindow::CreateTableView()
 {
     pTabWidget = ui->tabWidget;
-    //pTabWidget->addTab(new GeneralTab(fileInfo), tr("View"));
-    osg::ref_ptr<osgQt::GraphicsWindowQt> gw= createGraphicsWindow( 50, 50, 640, 480 );
-    osg::ref_ptr<osg::Node> scene=osgDB::readNodeFile("cow.osg");
-    pTabWidget->addTab(new ViewerWidget(gw, scene), tr("Result"));
+    pTabWidget->addTab(new GeneralTab(), tr("Introduction"));
+    pTabWidget->setTabsClosable(true);
+    connect(pTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
 }
-
 
 void MainWindow::CreateTreeView()
 {
     QStringList headers;
     headers << tr("Title");
-
     QFile file(":/text/defaultTree.txt");
     file.open(QIODevice::ReadOnly);
+    /*
+    QDomDocument doc;
+    if(!doc.setContent(&file)){
+        file.close();
+        return;
+    }
+    file.close();
+    TreeModel *model = new TreeModel(headers, doc);
+    */
     TreeModel *model = new TreeModel(headers, file.readAll());
     file.close();
     pTreeView = ui->treeView;
@@ -280,15 +286,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::New()
 {
-    QMessageBox msgBox;
-    msgBox.setText("test");
-    msgBox.exec();
-}
-
-
-
-void MainWindow::Open()
-{
     //导入配置文件，txt文件（osgPNGdata.txt）
     QString fileName =
             QFileDialog::getOpenFileName(
@@ -306,24 +303,49 @@ void MainWindow::Open()
     widget->addPickHandle();
 
     widget->setGeometry( 100, 100, 800, 600 );
-    pTabWidget->addTab(new ViewerWidget(gw, scene), tr("Result"));
-    /*
-    this->setCentralWidget(widget);
-    QDockWidget *dock=new QDockWidget(tr("ProjectManager"),this);
-    dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    dock->setAllowedAreas(Qt::RightDockWidgetArea|Qt::LeftDockWidgetArea);
-    QPushButton *button= new QPushButton();
-    QStringList list = fileName.split("/");
-    QString a = list[list.size() - 1]; //a = "hello"
-    button->setText(a);
-    dock->setWidget(button);
-    addDockWidget(Qt::LeftDockWidgetArea,dock);
-    qDebug() << "Can not open";
+    pTabWidget->addTab(widget, tr("Result"));
+}
 
-    QObject::connect(button, SIGNAL(clicked(bool)), this, SLOT(emitSig()));
 
-    QObject::connect(this, SIGNAL(sigTest(QString)), this, SLOT(readFile(QString)));
-    */
+
+void MainWindow::Open()
+{
+    const QString directoryName = QFileDialog::getExistingDirectory(this);
+    if (!directoryName.isEmpty())
+        loadDirectory(directoryName);
+}
+
+void MainWindow::loadDirectory(const QString &directory)
+{
+    Q_ASSERT(QDir(directory).exists());
+    m_fileNode = m_fileTree.nodeFor(directory);
+    QXmlQuery query(m_namePool);
+    query.bindVariable("fileTree", m_fileNode);
+    query.setQuery(QUrl("qrc:/text/wholeTree.xq"));
+
+    QByteArray output;
+    QBuffer buffer(&output);
+    buffer.open(QIODevice::WriteOnly);
+
+    QXmlFormatter formatter(query, &buffer);
+    query.evaluateTo(&formatter);
+    //add the xml
+    QFile file("./defaultTree.txt");
+    //if (file.open(QIODevice::ReadWrite)) {
+        //get the xml
+    file.open(QIODevice::ReadWrite);
+    qDebug() << QString::fromLatin1(output.constData());
+    QTextStream out(&file);
+    out << output;
+    //} else {
+      //  qDebug() << "cannot write the txt";
+    //}
+    file.close();
+}
+
+void MainWindow::removeSubTab(int index)
+{
+    pTabWidget->removeTab(index);
 }
 
 void MainWindow::readFile(QString fileName)
