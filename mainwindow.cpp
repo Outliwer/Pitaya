@@ -78,26 +78,57 @@ void MainWindow::CreateTableView()
 
 void MainWindow::CreateTreeView()
 {
+    /*
     QStringList headers;
     headers << tr("Title");
-    QFile file(":/text/defaultTree.txt");
+    QFile file("./defaultTree.txt");
     file.open(QIODevice::ReadOnly);
-    /*
-    QDomDocument doc;
-    if(!doc.setContent(&file)){
-        file.close();
-        return;
-    }
-    file.close();
-    TreeModel *model = new TreeModel(headers, doc);
-    */
     TreeModel *model = new TreeModel(headers, file.readAll());
     file.close();
-    pTreeView = ui->treeView;
     pTreeView->setModel(model);
     for (int column = 0; column < model->columnCount(); ++column)
         pTreeView->resizeColumnToContents(column);
+    */
+    pTreeView = ui->treeWidget;
+    pTreeView->setColumnCount(1);
+    QFile file("./defaultTree.txt");
+    if(file.open(QIODevice::ReadOnly)){
+        QDomDocument dom("WCM");
+        if (dom.setContent(&file))
+        {
+            ui->treeWidget->clear();
+            QDomElement docElem = dom.documentElement();
+            listDom(docElem, NULL);
+        }
+    }
+    file.close();
+}
 
+void MainWindow::listDom(QDomElement& docElem, QTreeWidgetItem* pItem){
+    QDomNode node = docElem.firstChild();
+    if(node.toElement().isNull()){
+        pItem->setText (1, docElem.text());
+    }
+    while(!node.isNull()){
+        QDomElement element = node.toElement(); // try to convert the node to an element.
+        if( !element.isNull() ){
+            QTreeWidgetItem *item;
+            if( pItem ){
+                item = new QTreeWidgetItem(pItem);
+            } else {
+                item = new QTreeWidgetItem(ui->treeWidget);
+            }
+            item->setText(0, element.tagName());
+            listDom(element, item);
+            if( pItem ){
+                pItem->addChild(item);
+            } else {
+                ui->treeWidget->addTopLevelItem(item);
+            }
+        }
+        node = node.nextSibling();
+    }
+    return;
 }
 
 void MainWindow::CreateCamera()
@@ -286,24 +317,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::New()
 {
-    //导入配置文件，txt文件（osgPNGdata.txt）
-    QString fileName =
-            QFileDialog::getOpenFileName(
-                this, tr("open file"), "",  tr("TxtFile(*.txt);;AllFile(*.*)"));
-
-    osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
-
-    //导入文件后，设置场景的节点
-    PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
-    osg::ref_ptr<osg::Group> scene=panoBallDS->ReadFile();
-
-
-    ViewerWidget* widget = new ViewerWidget(gw, scene);
-    //绑定点击事件
-    widget->addPickHandle();
-
-    widget->setGeometry( 100, 100, 800, 600 );
-    pTabWidget->addTab(widget, tr("Result"));
 }
 
 
@@ -331,16 +344,12 @@ void MainWindow::loadDirectory(const QString &directory)
     query.evaluateTo(&formatter);
     //add the xml
     QFile file("./defaultTree.txt");
-    //if (file.open(QIODevice::ReadWrite)) {
-        //get the xml
-    file.open(QIODevice::ReadWrite);
-    qDebug() << QString::fromLatin1(output.constData());
-    QTextStream out(&file);
-    out << output;
-    //} else {
-      //  qDebug() << "cannot write the txt";
-    //}
+    if (file.open(QIODevice::Append)) {
+        QTextStream out(&file);
+        out << output;
+    }
     file.close();
+    CreateTreeView();
 }
 
 void MainWindow::removeSubTab(int index)
@@ -419,9 +428,24 @@ void MainWindow::Cloudmodel()
 
 void MainWindow::OSGimg()
 {
-    QMessageBox msgBox;
-    msgBox.setText("test");
-    msgBox.exec();
+    //导入配置文件，txt文件（osgPNGdata.txt）
+    QString fileName =
+            QFileDialog::getOpenFileName(
+                this, tr("open file"), "",  tr("TxtFile(*.txt);;AllFile(*.*)"));
+
+    osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
+
+    //导入文件后，设置场景的节点
+    PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
+    osg::ref_ptr<osg::Group> scene=panoBallDS->ReadFile();
+
+
+    ViewerWidget* widget = new ViewerWidget(gw, scene);
+    //绑定点击事件
+    widget->addPickHandle();
+
+    widget->setGeometry( 100, 100, 800, 600 );
+    pTabWidget->addTab(widget, tr("Result"));
 }
 
 void MainWindow::AerialTriangulation()

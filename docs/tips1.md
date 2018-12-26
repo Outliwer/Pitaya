@@ -13,4 +13,6 @@
   * `http://www.voidcn.com/article/p-dojiflff-bhr.html`
   * `https://www.cnblogs.com/qiaozhoulin/p/4528002.html`
 
-* 
+* 关于`QTreeWidgetItem`的使用：
+
+  * `https://blog.csdn.net/bzhxuexi/article/details/10054343`

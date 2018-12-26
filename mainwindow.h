@@ -2,14 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QXmlNamePool>
+#include <QDomDocument>
 #include "./tools/xml/filetree.h"
 namespace Ui {
 class MainWindow;
 }
 QT_BEGIN_NAMESPACE
-class QTreeView;
+class QTreeWidget;
 class QPlainTextEdit;
+class QTreeWidgetItem;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -26,7 +27,7 @@ private:
     QWidget *pResultWidget;
     QWidget *pViewWidget;
     QTabWidget *pTabWidget;
-    QTreeView *pTreeView;
+    QTreeWidget *pTreeView;
     QMenuBar* pMenuBar;
     QToolBar* pToolBar;
     QStatusBar* pStatusBar;
@@ -43,6 +44,7 @@ protected:
     void CreateCamera();
     void CreateTableView();
     void CreateTreeView();
+    void listDom(QDomElement& docElem, QTreeWidgetItem* pItem);
     virtual void mouseMoveEvent(QMouseEvent *event);
 
 signals:

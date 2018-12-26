@@ -8,6 +8,7 @@ QT += core
 QT -= gui
 QT += opengl
 QT += xmlpatterns
+QT += xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

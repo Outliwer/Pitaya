@@ -20,15 +20,19 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTreeView" name="treeView"/>
-      <widget class="QTabWidget" name="tabWidget">
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
+      <widget class="QTreeWidget" name="treeWidget">
+       <column>
+        <property name="text">
+         <string>Project</string>
+        </property>
+       </column>
       </widget>
+      <widget class="QTabWidget" name="tabWidget"/>
      </widget>
     </item>
    </layout>
+   <zorder>tabWidget</zorder>
+   <zorder>treeWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
