@@ -9,7 +9,10 @@
   - [项目引入](./docs/projectReference.md)
 - 教程
   - [`osg`控件的显示](./docs/chapter1.md)
-  - [`osg`控键与其他`qt`控件的嵌套使用](./docs/chapter2.md)
+  - [`osg`控件与原生`qt`控件的联合使用](./docs/chapter2.md)
+  - [原生`qt`控件的场景嵌套](./docs/chapter3.md)
 - 一些小`tips`
   - [窗体设置](./dosc/tips1.md)
+- [其他参考的项目](./docs/project.md)
+- [项目设计](./docs/design.md)
 
