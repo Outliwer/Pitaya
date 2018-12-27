@@ -24,5 +24,8 @@
         <file>img/redo.png</file>
         <file>text/defaultTree.txt</file>
         <file>text/wholeTree.xq</file>
+        <file>icon/folder.png</file>
+        <file>icon/file_img.png</file>
+        <file>icon/file_txt.png</file>
     </qresource>
 </RCC>

@@ -126,6 +126,14 @@ void MainWindow::listDom(QDomElement& docElem, QTreeWidgetItem* pItem){
             // TODO:设置图标
             item->setText(0, element.attribute("fileName"));
             item->setText(1, element.attribute("filePath"));
+            QString fileSuffix = element.attribute("suffix");
+            if (fileSuffix.compare("png") == 0 || fileSuffix.compare("jpg") == 0){
+                item->setIcon(0,QIcon(":/icon/file_img.png"));
+            } else if (fileSuffix.compare("md") == 0 || fileSuffix.compare("txt") == 0){
+                item->setIcon(0,QIcon(":/icon/file_txt.png"));
+            } else {
+                item->setIcon(0,QIcon(":/icon/folder.png"));
+            }
             listDom(element, item);
             if( pItem ){
                 pItem->addChild(item);
@@ -152,7 +160,7 @@ void MainWindow::checkself(QTreeWidgetItem* ,int){
             pTabWidget->addTab(m_pictureBox, tr("read file %1.").arg(QDir::toNativeSeparators(fileName)));
             ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
         }
-    } else {
+    } else if (fileSuffix.compare("md") == 0 || fileSuffix.compare("txt") == 0){
         QFile file(filePath);
         if (!file.open(QFile::ReadOnly | QFile::Text)) {
             QMessageBox::warning(this, tr("Application"),
