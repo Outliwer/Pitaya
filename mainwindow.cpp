@@ -34,15 +34,13 @@
 #include <QFileDialog>
 
 #include "./osgView/osgview.h"
-#include "./qtWidget/treeview/treemodel.h"
 #include "./osgWidget/panoBall/panoball.h"
 #include "./osgHandler/pickhandler.h"
 #include "./qtWidget/tableview/generaltab.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), m_fileTree(m_namePool),textEdit(new QPlainTextEdit)
-{
+    ui(new Ui::MainWindow), m_fileTree(m_namePool),textEdit(new QPlainTextEdit){
     ui->setupUi(this);
     this->resize( QSize( 1200, 900 ));
     this->setWindowState(Qt::WindowMinimized);
@@ -60,16 +58,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
 
     delete ui;
 }
 
 
 
-void MainWindow::CreateTableView()
-{
+void MainWindow::CreateTableView(){
     pTabWidget = ui->tabWidget;
     m_pictureBox = new PictureBox();
     pTabWidget->addTab(new GeneralTab(), tr("Introduction"));
@@ -78,19 +74,7 @@ void MainWindow::CreateTableView()
     connect(pTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
 }
 
-void MainWindow::CreateTreeView()
-{
-    /*
-    QStringList headers;
-    headers << tr("Title");
-    QFile file("./defaultTree.txt");
-    file.open(QIODevice::ReadOnly);
-    TreeModel *model = new TreeModel(headers, file.readAll());
-    file.close();
-    pTreeView->setModel(model);
-    for (int column = 0; column < model->columnCount(); ++column)
-        pTreeView->resizeColumnToContents(column);
-    */
+void MainWindow::CreateTreeView(){
     pTreeWidget = ui->treeWidget;
     pTreeWidget->setColumnCount(1);
     QFile file("./defaultTree.txt");

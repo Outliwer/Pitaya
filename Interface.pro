@@ -20,8 +20,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     osgWidget/panoBall/panoball.cpp \
     osgHandler/pickhandler.cpp \
-    qtWidget/treeview/treeitem.cpp \
-    qtWidget/treeview/treemodel.cpp \
     qtWidget/tableview/generaltab.cpp \
     tools/xml/filetree.cpp \
     tools/picture/picturebox.cpp
@@ -33,8 +31,6 @@ HEADERS  += mainwindow.h \
     osgWidget/panoBall/panoball.h \
     osgHandler/pickhandler.h \
     osgView/osgview.h \
-    qtWidget/treeview/treeitem.h \
-    qtWidget/treeview/treemodel.h \
     qtWidget/tableview/generaltab.h \
     tools/xml/filetree.h \
     tools/picture/picturebox.h
