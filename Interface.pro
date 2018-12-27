@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     qtWidget/treeview/treeitem.cpp \
     qtWidget/treeview/treemodel.cpp \
     qtWidget/tableview/generaltab.cpp \
-    tools/xml/filetree.cpp
+    tools/xml/filetree.cpp \
+    tools/picture/picturebox.cpp
 
 HEADERS  += mainwindow.h \
     libs.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     qtWidget/treeview/treeitem.h \
     qtWidget/treeview/treemodel.h \
     qtWidget/tableview/generaltab.h \
-    tools/xml/filetree.h
+    tools/xml/filetree.h \
+    tools/picture/picturebox.h
 
 FORMS    += mainwindow.ui
 

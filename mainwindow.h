@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QDomDocument>
+#include <QtWidgets>
 #include "./tools/xml/filetree.h"
+#include "./tools/picture/picturebox.h"
 namespace Ui {
 class MainWindow;
 }
@@ -24,10 +26,8 @@ private:
     void loadDirectory(const QString &directory);
 private:
     Ui::MainWindow *ui;
-    QWidget *pResultWidget;
-    QWidget *pViewWidget;
     QTabWidget *pTabWidget;
-    QTreeWidget *pTreeView;
+    QTreeWidget *pTreeWidget;
     QMenuBar* pMenuBar;
     QToolBar* pToolBar;
     QStatusBar* pStatusBar;
@@ -36,6 +36,8 @@ private:
     const QXmlNamePool  m_namePool;
     const FileTree      m_fileTree;
     QXmlNodeModelIndex  m_fileNode;
+    PictureBox *m_pictureBox;
+    QImage pQImage;
 
 protected:
     void CreateMenu();
@@ -74,6 +76,12 @@ protected slots:
     void TechnicalSupport();
     void readFile(QString fileName);
     void removeSubTab(int index);
+    void checkself(QTreeWidgetItem* ,int);
+    void popMenu(const QPoint&);
+    void deleteItem();
+    void renameWell();
+    void DeleteDirectory(const QString &path);
+    void nameChanged(QTreeWidgetItem* item);
 };
 
 #endif // MAINWINDOW_H

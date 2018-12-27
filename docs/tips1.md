@@ -16,3 +16,5 @@
 * 关于`QTreeWidgetItem`的使用：
 
   * `https://blog.csdn.net/bzhxuexi/article/details/10054343`
+  * `https://www.cnblogs.com/ling123/p/5503465.html`
+  * `http://www.voidcn.com/article/p-nkqkbdev-bcr.html`

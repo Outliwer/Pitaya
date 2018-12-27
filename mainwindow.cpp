@@ -41,7 +41,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), m_fileTree(m_namePool)
+    ui(new Ui::MainWindow), m_fileTree(m_namePool),textEdit(new QPlainTextEdit)
 {
     ui->setupUi(this);
     this->resize( QSize( 1200, 900 ));
@@ -71,7 +71,9 @@ MainWindow::~MainWindow()
 void MainWindow::CreateTableView()
 {
     pTabWidget = ui->tabWidget;
+    m_pictureBox = new PictureBox();
     pTabWidget->addTab(new GeneralTab(), tr("Introduction"));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
     pTabWidget->setTabsClosable(true);
     connect(pTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
 }
@@ -89,25 +91,28 @@ void MainWindow::CreateTreeView()
     for (int column = 0; column < model->columnCount(); ++column)
         pTreeView->resizeColumnToContents(column);
     */
-    pTreeView = ui->treeWidget;
-    pTreeView->setColumnCount(1);
+    pTreeWidget = ui->treeWidget;
+    pTreeWidget->setColumnCount(1);
     QFile file("./defaultTree.txt");
     if(file.open(QIODevice::ReadOnly)){
         QDomDocument dom("WCM");
-        if (dom.setContent(&file))
-        {
+        if (dom.setContent(&file)){
             ui->treeWidget->clear();
             QDomElement docElem = dom.documentElement();
             listDom(docElem, NULL);
         }
     }
     file.close();
+    connect(pTreeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)), this,SLOT(checkself(QTreeWidgetItem* ,int)));//检测点击事件，信号槽机制
+    connect(pTreeWidget,SIGNAL(customContextMenuRequested(const QPoint&)), this,SLOT(popMenu(const QPoint&)));//检测鼠标右键
 }
 
 void MainWindow::listDom(QDomElement& docElem, QTreeWidgetItem* pItem){
     QDomNode node = docElem.firstChild();
     if(node.toElement().isNull()){
-        pItem->setText (1, docElem.text());
+        pItem->setText (0,docElem.attribute("fileName"));
+        pItem->setText (1,docElem.attribute("filePath"));
+        pItem->setText (2,docElem.attribute("suffix"));
     }
     while(!node.isNull()){
         QDomElement element = node.toElement(); // try to convert the node to an element.
@@ -118,7 +123,9 @@ void MainWindow::listDom(QDomElement& docElem, QTreeWidgetItem* pItem){
             } else {
                 item = new QTreeWidgetItem(ui->treeWidget);
             }
-            item->setText(0, element.tagName());
+            // TODO:设置图标
+            item->setText(0, element.attribute("fileName"));
+            item->setText(1, element.attribute("filePath"));
             listDom(element, item);
             if( pItem ){
                 pItem->addChild(item);
@@ -131,8 +138,124 @@ void MainWindow::listDom(QDomElement& docElem, QTreeWidgetItem* pItem){
     return;
 }
 
-void MainWindow::CreateCamera()
-{
+void MainWindow::checkself(QTreeWidgetItem* ,int){
+    //qDebug() << "open on";
+    QTreeWidgetItem* curItem=pTreeWidget->currentItem();  //获取当前被点击的节点
+    if(curItem==NULL)return;
+    QString filePath = curItem->text(1);
+    QString fileName = curItem->text(0);
+    QString fileSuffix = curItem->text(3);
+    if (fileSuffix.compare("png") || fileSuffix.compare("jpg")){
+        if (pQImage.load(filePath)){
+            m_pictureBox->setImage(pQImage);
+            m_pictureBox->setMode(PictureBox::PB_MODE::FIX_SIZE_CENTRED);
+            pTabWidget->addTab(m_pictureBox, tr("read file %1.").arg(QDir::toNativeSeparators(fileName)));
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+        }
+    } else {
+        QFile file(filePath);
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, tr("Application"),
+                                 tr("Cannot read file %1:\n%2.")
+                                 .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+            return;
+        }
+        QTextStream in(&file);
+        in.setCodec("UTF-8");
+        #ifndef QT_NO_CURSOR
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+        #endif
+        textEdit->setPlainText(in.readAll());
+        #ifndef QT_NO_CURSOR
+        QApplication::restoreOverrideCursor();
+        #endif
+        pTabWidget->addTab(textEdit, tr("read file %1.").arg(QDir::toNativeSeparators(fileName)));
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+    }
+}
+
+void MainWindow::popMenu(const QPoint&){
+    //qDebug() << "right on";
+    QTreeWidgetItem* curItem=pTreeWidget->currentItem();  //获取当前被点击的节点
+    if(curItem==NULL)return;           //这种情况是右键的位置不在treeItem的范围内，即在空白位置右击
+    QString wellName = curItem->text(0);
+    if(wellName != "wells"){
+        QAction deleteWell(QString::fromLocal8Bit("&删除文件"),this);//删除井
+        QAction reNameWell(QString ::fromLocal8Bit("&重命名文件"),this);//重命名井
+        //在界面上删除该item
+        connect(&deleteWell, SIGNAL(triggered()), this, SLOT(deleteItem()));
+        connect(&reNameWell,SIGNAL(triggered()),this,SLOT(renameWell()));
+        QMenu menu(ui->treeWidget);
+        menu.addAction(&deleteWell);
+        menu.addAction(&reNameWell);
+        menu.exec(QCursor::pos());  //在当前鼠标位置显示
+    }
+}
+
+void MainWindow::deleteItem(){
+    /*
+    root->removeChild(treeWidget->currentItem());
+    if(myW != NULL){
+        myW->setParent(NULL);
+        ui.verticalLayout_4->removeWidget(myW);
+    }
+    //删除井数据文件
+    QString dirPath = "../Data1/";
+    dirPath.append(treeWidget->currentItem()->text(0));
+    dirPath.append("/");
+    DeleteDirectory(dirPath);
+    */
+}
+
+void MainWindow::renameWell(){
+    /*
+    preName = treeWidget->currentItem()->text(0);
+    prePath = "../Data1/";
+    prePath.append(preName);
+    ui.treeWidget->editItem(ui.treeWidget->currentItem());
+    //t通过监控itemChanged事件来确定修改后的名字！！！！
+    connect(treeWidget,SIGNAL(itemChanged( QTreeWidgetItem *,int )),this,SLOT(nameChanged(QTreeWidgetItem*  )));
+    */
+}
+
+void MainWindow::DeleteDirectory(const QString &path){
+    /*
+    if (path.isEmpty())
+            return false;
+    QDir dir(path);
+    if(!dir.exists())
+        return true;
+    dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    QFileInfoList fileList = dir.entryInfoList();
+    foreach (QFileInfo fi, fileList){
+        if (fi.isFile())
+            fi.dir().remove(fi.fileName());
+        else
+            DeleteDirectory(fi.absoluteFilePath());
+    }
+    return dir.rmpath(dir.absolutePath());
+    */
+}
+
+void MainWindow::nameChanged(QTreeWidgetItem* item){
+    /*
+    //先重命名文件夹
+    QString newName = treeWidget->currentItem()->text(0);
+    QString newPath = "../Data1/";
+    newPath.append(newName);
+    QFile::rename(prePath,newPath);
+    prePath = newPath.append("/");
+    prePath.append(preName);
+    prePath.append(".txt");
+    //重命名井眼轨迹处理后的文件
+    newPath.append("/");
+    newPath.append(newName);
+    newPath.append(".txt");
+    QFile::rename(prePath,newPath);
+    */
+}
+
+void MainWindow::CreateCamera(){
 
 }
 
@@ -342,16 +465,44 @@ void MainWindow::loadDirectory(const QString &directory)
 
     QXmlFormatter formatter(query, &buffer);
     query.evaluateTo(&formatter);
-    //add the xml
-    QFile file("./defaultTree.txt");
-    if (file.open(QIODevice::Append)) {
-        QTextStream out(&file);
+    //处理这一次打开文件的docTemp
+    QFile fileTemp("./temp.txt");
+    if (fileTemp.open(QIODevice::ReadWrite | QFile::Truncate)) {
+        QTextStream out(&fileTemp);
         out << output;
+    }
+    QDomDocument docTemp;
+    fileTemp.close();
+    QFile fileTempRead("./temp.txt");
+    if(!fileTempRead.open(QFile::ReadOnly))
+            return;
+    if(!docTemp.setContent(&fileTempRead)){
+        fileTempRead.close();
+        return;
+    }
+    fileTempRead.close();
+    //在原有的基本项目增加新的项目
+    QFile file("./defaultTree.txt");
+    QDomDocument doc;
+    if(!doc.setContent(&file)){
+        file.close();
+        return;
+    }
+    file.close();
+    QDomElement root=doc.documentElement();
+    QDomElement rootTemp=docTemp.documentElement();
+    root.appendChild(rootTemp);
+    if(file.open(QIODevice::ReadWrite | QFile::Truncate)){
+        QTextStream out_stream(&file);
+        doc.save(out_stream,4); //缩进4格
     }
     file.close();
     CreateTreeView();
 }
 
+/**
+  * remove the tab in the tabWidget
+  */
 void MainWindow::removeSubTab(int index)
 {
     pTabWidget->removeTab(index);
@@ -446,6 +597,7 @@ void MainWindow::OSGimg()
 
     widget->setGeometry( 100, 100, 800, 600 );
     pTabWidget->addTab(widget, tr("Result"));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
 
 void MainWindow::AerialTriangulation()
