@@ -594,20 +594,24 @@ void MainWindow::OSGimg()
                 */
     QTreeWidgetItem* curItem=pTreeWidget->currentItem();  //获取当前被点击的节点
     QString fileName = curItem->text(1);
-    osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
+    if (curItem->text(2).compare("")!=0){
+        osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
 
-    //导入文件后，设置场景的节点
-    PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
-    osg::ref_ptr<osg::Group> scene=panoBallDS->ReadFile();
+        //导入文件后，设置场景的节点
+        PanoBallDataSet *panoBallDS=new PanoBallDataSet(fileName.toStdString());
+        osg::ref_ptr<osg::Group> scene=panoBallDS->ReadFile();
 
 
-    ViewerWidget* widget = new ViewerWidget(gw, scene);
-    //绑定点击事件
-    widget->addPickHandle();
+        ViewerWidget* widget = new ViewerWidget(gw, scene);
+        //绑定点击事件
+        widget->addPickHandle();
 
-    widget->setGeometry( 100, 100, 800, 600 );
-    pTabWidget->addTab(widget, tr("result of %1.").arg(QDir::toNativeSeparators(curItem->text(0))));
-    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+        widget->setGeometry( 100, 100, 800, 600 );
+        pTabWidget->addTab(widget, tr("result of %1.").arg(QDir::toNativeSeparators(curItem->text(0))));
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+    } else {
+        QMessageBox::information(this, QString::fromLocal8Bit("警告"),QString::fromLocal8Bit("请选择文件进行操作"));
+    }
 }
 
 void MainWindow::AerialTriangulation()
