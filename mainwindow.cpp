@@ -144,8 +144,8 @@ void MainWindow::checkself(QTreeWidgetItem* ,int){
     if(curItem==NULL)return;
     QString filePath = curItem->text(1);
     QString fileName = curItem->text(0);
-    QString fileSuffix = curItem->text(3);
-    if (fileSuffix.compare("png") || fileSuffix.compare("jpg")){
+    QString fileSuffix = curItem->text(2);
+    if (fileSuffix.compare("png") == 0 || fileSuffix.compare("jpg") == 0){
         if (pQImage.load(filePath)){
             m_pictureBox->setImage(pQImage);
             m_pictureBox->setMode(PictureBox::PB_MODE::FIX_SIZE_CENTRED);
@@ -579,11 +579,13 @@ void MainWindow::Cloudmodel()
 
 void MainWindow::OSGimg()
 {
-    //导入配置文件，txt文件（osgPNGdata.txt）
+    /*
     QString fileName =
             QFileDialog::getOpenFileName(
                 this, tr("open file"), "",  tr("TxtFile(*.txt);;AllFile(*.*)"));
-
+                */
+    QTreeWidgetItem* curItem=pTreeWidget->currentItem();  //获取当前被点击的节点
+    QString fileName = curItem->text(1);
     osg::ref_ptr<osgQt::GraphicsWindowQt> gw = createGraphicsWindow( 50, 50, 640, 480 );
 
     //导入文件后，设置场景的节点
@@ -596,7 +598,7 @@ void MainWindow::OSGimg()
     widget->addPickHandle();
 
     widget->setGeometry( 100, 100, 800, 600 );
-    pTabWidget->addTab(widget, tr("Result"));
+    pTabWidget->addTab(widget, tr("result of %1.").arg(QDir::toNativeSeparators(curItem->text(0))));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
 
